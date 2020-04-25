@@ -43,14 +43,29 @@ public class PuzzleState {
         return s.toString();
     }
 
+    public void printState() {
+        for (int x = 0 ; x < dimension ; x++) {
+            for (int y = 0; y < dimension; y++)
+                System.out.print(puzzleBoard[x][y] + "\t");
+            System.out.println();
+        }
+        System.out.println();
+    }
+
     /* Generate possible neighbors based on the current state */
     public void findNeighbors() {
         int x, y;               /* Coordinates of tiles in the board */
+        boolean found;
         x = y = 0;
-        for (; x < dimension; x++){
+        found = false;
+        for (x = 0 ; x < dimension; x++){
             for (y = 0; y < dimension; y++)
-                if (puzzleBoard[x][y] == 0)
+                if (puzzleBoard[x][y] == 0) {
+                    found = true;
                     break;
+                }
+            if (found)
+                break;
         }
         neighbors.add(0, getNeighbor("up", x, y));
         neighbors.add(1, getNeighbor("down", x, y));
