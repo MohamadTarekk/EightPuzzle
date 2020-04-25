@@ -120,11 +120,6 @@ public class PuzzleState {
         puzzleBoard[x2][y2] = temp;
     }
 
-    /* Getter for the list of strings representing the neighbors */
-    public ArrayList<String> getNeighbors() {
-        return neighbors;
-    }
-
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
@@ -135,5 +130,23 @@ public class PuzzleState {
             }
         s.deleteCharAt(s.length() - 1);
         return s.toString();
+    }
+
+
+    /******************************* Getters *******************************/
+
+    /* Getter for puzzle board layout */
+    public Integer[][] getPuzzleBoard() {
+        return puzzleBoard;
+    }
+
+    /* Getter for puzzle board side length */
+    public int getDimension() {
+        return dimension;
+    }
+
+    /* Getter for the list of strings representing the neighbors */
+    public ArrayList<String> getNeighbors() {
+        return neighbors;
     }
 }
