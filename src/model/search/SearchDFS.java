@@ -12,7 +12,7 @@ public class SearchDFS {
     public static SearchResult dfs(PuzzleState initialState, PuzzleState goalState) {
         HashStack<FrontierEntry> frontier = new HashStack<>();      /* LIFO Stack of frontier nodes */
         Set<String> explored = new HashSet<>();                     /* Set of explored nodes */
-        PuzzleState currentState = null;                            /* Current state object */
+        PuzzleState currentState = initialState;                    /* Current state object */
         FrontierEntry entry;                                        /* Holder of extracted frontier entry */
         SearchResult result = new SearchResult();                   /* Search results object */
         Long start, end;                                            /* For elapsed time calculation */
@@ -30,8 +30,10 @@ public class SearchDFS {
             explored.add(currentState.toString());
             result.updateExpandedNodes();
             /* Check if goal state reached */
-            if (goalState.toString().equals(currentState.toString()))
+            if (goalState.toString().equals(currentState.toString())) {
+                result.setFound(true);
                 break;
+            }
             /* Add neighbors to frontier */
             hasNeighbors = false;
             currentState.findNeighbors();
@@ -47,7 +49,7 @@ public class SearchDFS {
             }
             /* Update search depth */
             if (!hasNeighbors)
-                result.updateDepth(currentState);
+                result.updateMaxDepth(currentState);
         }
 
         /* Calculate elapsed time */
@@ -56,6 +58,9 @@ public class SearchDFS {
 
         /* Find path to goal */
         result.findPathToGoal(currentState);
+
+        /* Update path depth */
+        result.updateDepth();
 
         /* Update path cost */
         result.updateCost();

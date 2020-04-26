@@ -6,19 +6,29 @@ public class SearchResult {
     private ArrayList<String> pathToGoal;
     private Integer nodesExpanded;
     private Integer pathCost;
+    private Integer maxSearchDepth;
     private Integer searchDepth;
     private Long runningTime;
+    private boolean found;
 
     public SearchResult() {
         pathToGoal = new ArrayList<>();
         nodesExpanded = 0;
         pathCost = 0;
+        maxSearchDepth = 0;
         searchDepth = 0;
         runningTime = 0L;
+        found = false;
     }
 
     public void findPathToGoal(PuzzleState puzzleState) {
         int index;
+
+        if (!this.found) {
+            this.pathToGoal.add("Goal not found!");
+            return;
+        }
+
         while (puzzleState.getPreviousState() != null) {
             index = puzzleState.getPreviousState().getNeighbors().indexOf(puzzleState.toString());
             switch (index) {
@@ -40,20 +50,35 @@ public class SearchResult {
     }
 
     public void updateCost() {
+        if (!this.found) {
+            this.pathCost = -1;
+            return;
+        }
         this.pathCost = pathToGoal.size();
-        if (this.searchDepth < this.pathCost)
-            this.searchDepth = this.pathCost;
     }
 
-    public void updateDepth(PuzzleState leaf) {
-        if (this.searchDepth < leaf.getDepth())
-            this.searchDepth = leaf.getDepth();
+    public void updateMaxDepth(PuzzleState leaf) {
+        if (this.maxSearchDepth < leaf.getDepth())
+            this.maxSearchDepth = leaf.getDepth();
+    }
+
+    public void updateDepth() {
+        if (!this.found) {
+            this.searchDepth = this.maxSearchDepth;
+            return;
+        }
+        this.searchDepth = this.pathToGoal.size();
+        if (this.maxSearchDepth < this.searchDepth)
+            this.maxSearchDepth = this.searchDepth;
     }
 
     public void calculateRunningTime(Long start, Long end) {
         this.runningTime = end - start;
     }
 
+    public void setFound(boolean found) {
+        this.found = found;
+    }
 
     /******************************* Getters *******************************/
 
@@ -69,11 +94,19 @@ public class SearchResult {
         return pathCost;
     }
 
+    public Integer getMaxSearchDepth() {
+        return maxSearchDepth;
+    }
+
     public Integer getSearchDepth() {
         return searchDepth;
     }
 
     public Long getRunningTime() {
         return runningTime;
+    }
+
+    public boolean isFound() {
+        return found;
     }
 }

@@ -13,7 +13,7 @@ public class SearchAstar {
     public static SearchResult Astar(PuzzleState initialState, PuzzleState goalState, Heuristic costFunction) {
         PriorityQueue<MinHeapEntry> frontier = new PriorityQueue<>();       /* Min Heap of frontier nodes */
         Set<String> explored = new HashSet<>();                             /* Set of explored nodes */
-        PuzzleState currentState = null;                                    /* Current state object */
+        PuzzleState currentState = initialState;                            /* Current state object */
         MinHeapEntry entry;                                                 /* Min Heap entry object */
         int cost;                                                           /* Cost of state heuristic function */
         SearchResult result = new SearchResult();                           /* Search results object */
@@ -33,8 +33,10 @@ public class SearchAstar {
             explored.add(currentState.toString());
             result.updateExpandedNodes();
             /* Check if goal state reached */
-            if (goalState.toString().equals(currentState.toString()))
+            if (goalState.toString().equals(currentState.toString())) {
+                result.setFound(true);
                 break;
+            }
             /* Add neighbors to frontier */
             hasNeighbors = false;
             currentState.findNeighbors();
@@ -50,7 +52,7 @@ public class SearchAstar {
                 }
             }
             if (!hasNeighbors)
-                result.updateDepth(currentState);
+                result.updateMaxDepth(currentState);
         }
 
         /* Calculate elapsed time */
@@ -59,6 +61,9 @@ public class SearchAstar {
 
         /* Find path to goal */
         result.findPathToGoal(currentState);
+
+        /* Update path depth */
+        result.updateDepth();
 
         /* Update path cost */
         result.updateCost();

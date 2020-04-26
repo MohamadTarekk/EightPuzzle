@@ -13,7 +13,7 @@ public class SearchBFS {
         HashQueue<FrontierEntry> frontier = new HashQueue<>();      /* FIFO Queue of frontier nodes */
         Set<String> explored = new HashSet<>();                     /* Set of explored nodes */
         FrontierEntry entry;                                        /* Holder of extracted frontier entry */
-        PuzzleState currentState = null;                            /* Current state object */
+        PuzzleState currentState = initialState;                    /* Current state object */
         SearchResult result = new SearchResult();                   /* Search results object */
         Long start, end;                                            /* For elapsed time calculation */
         boolean hasNeighbors;                                       /* Flag to indicate whether current state has neighbors */
@@ -30,8 +30,10 @@ public class SearchBFS {
             explored.add(currentState.toString());
             result.updateExpandedNodes();
             /* Check if goal state reached */
-            if (goalState.toString().equals(currentState.toString()))
+            if (goalState.toString().equals(currentState.toString())) {
+                result.setFound(true);
                 break;
+            }
             /* Add neighbors to frontier */
             hasNeighbors = false;
             currentState.findNeighbors();
@@ -47,7 +49,7 @@ public class SearchBFS {
             }
             /* Update search depth */
             if (!hasNeighbors)
-                result.updateDepth(currentState);
+                result.updateMaxDepth(currentState);
         }
 
         /* Calculate elapsed time */
@@ -56,6 +58,9 @@ public class SearchBFS {
 
         /* Find path to goal */
         result.findPathToGoal(currentState);
+
+        /* Update path depth */
+        result.updateDepth();
 
         /* Update path cost */
         result.updateCost();
