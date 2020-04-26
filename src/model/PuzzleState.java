@@ -6,15 +6,26 @@ public class PuzzleState {
     /* Layout of the puzzle board */
     private Integer[][] puzzleBoard;
     /* Side length of he puzzle board */
-    private int dimension;
+    private Integer dimension;
+    /* Depth of puzzle state node in graph */
+    private Integer depth;
     /* List of possible next state */
     private ArrayList<String> neighbors = new ArrayList<>(4);
+    /* Previous puzzle state object */
+    private PuzzleState previousState;
 
     /* Constructor */
-    public PuzzleState(String inputState) {
+    public PuzzleState(String inputState, PuzzleState previousState) {
         String[] tiles;         /* Tiles arrangement in the initial state */
         int x, y;               /* Coordinates of tiles in the board */
 
+        /* Save previous state */
+        this.previousState = previousState;
+        /* Set depth */
+        if (previousState == null)
+            this.depth = 0;
+        else
+            this.depth = previousState.getDepth() + 1;
         /* Initialize puzzle board dimensions */
         tiles = inputState.split(",");
         dimension = (int) Math.sqrt(tiles.length);
@@ -55,8 +66,9 @@ public class PuzzleState {
     /* Generate possible neighbors based on the current state */
     public void findNeighbors() {
         int x, y;               /* Coordinates of tiles in the board */
-        boolean found;
-        x = y = 0;
+        boolean found;          /* Boolean to indicate finding the empty tile */
+
+        y = 0;
         found = false;
         for (x = 0 ; x < dimension; x++){
             for (y = 0; y < dimension; y++)
@@ -67,6 +79,7 @@ public class PuzzleState {
             if (found)
                 break;
         }
+
         neighbors.add(0, getNeighbor("up", x, y));
         neighbors.add(1, getNeighbor("down", x, y));
         neighbors.add(2, getNeighbor("left", x, y));
@@ -145,8 +158,19 @@ public class PuzzleState {
         return dimension;
     }
 
+    /* Getter for puzzle state node depth in graph */
+    public Integer getDepth() {
+        return depth;
+    }
+
     /* Getter for the list of strings representing the neighbors */
     public ArrayList<String> getNeighbors() {
         return neighbors;
     }
+
+    /* Getter for previous state */
+    PuzzleState getPreviousState() {
+        return previousState;
+    }
+
 }

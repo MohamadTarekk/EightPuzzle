@@ -5,12 +5,12 @@ import java.util.Set;
 import java.util.Stack;
 
 public class HashStack<Type> extends Stack<Type> {
-    private Set<Type> map = new HashSet<>();
+    private Set<String> map = new HashSet<>();
 
     @Override
     public Type push(Type object) {
         addElement(object);
-        map.add(object);
+        map.add(((FrontierEntry)object).getState());
         return object;
     }
 
@@ -20,12 +20,12 @@ public class HashStack<Type> extends Stack<Type> {
         int len = size();
         object = peek();
         removeElementAt(len - 1);
-        map.remove(object);
+        map.remove(((FrontierEntry)object).getState());
         return object;
     }
 
     @Override
     public boolean contains(Object object) {
-        return map.contains(object);
+        return map.contains(((FrontierEntry)object).getState());
     }
 }

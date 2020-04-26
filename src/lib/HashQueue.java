@@ -5,22 +5,23 @@ import java.util.LinkedList;
 import java.util.Set;
 
 public class HashQueue<Type> extends LinkedList<Type> {
-    private Set<Type> map = new HashSet<>();
+    private Set<String> map = new HashSet<>();
 
     public void enqueue(Type object) {
         this.add(object);
-        map.add(object);
+        map.add(((FrontierEntry)object).getState());
     }
 
     public Type dequeue() {
         Type object;
         object= this.poll();
-        map.remove(object);
+        if (object != null)
+            map.remove(((FrontierEntry)object).getState());
         return object;
     }
 
     @Override
     public boolean contains(Object object) {
-        return map.contains(object);
+        return map.contains(((FrontierEntry)object).getState());
     }
 }

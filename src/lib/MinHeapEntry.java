@@ -1,12 +1,16 @@
 package lib;
 
+import model.PuzzleState;
+
 public class MinHeapEntry implements Comparable<MinHeapEntry> {
     private String state;
     private Integer cost;
+    private PuzzleState parentState;
 
-    public MinHeapEntry(String state, Integer cost) {
+    public MinHeapEntry(String state, Integer cost, PuzzleState parentState) {
         this.state = state;
         this.cost = cost;
+        this.parentState = parentState;
     }
 
     @Override
@@ -23,5 +27,9 @@ public class MinHeapEntry implements Comparable<MinHeapEntry> {
 
     public Integer getCost() {
         return cost;
+    }
+
+    public PuzzleState getParentState() {
+        return parentState;
     }
 }

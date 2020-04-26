@@ -11,7 +11,7 @@ public class ManhattanDistance extends Heuristic {
         int goalY;                      /* Goal Y coordinate of tile */
         int distance;                   /* Manhattan distance of tile */
 
-        state = new PuzzleState(stateStr);
+        state = new PuzzleState(stateStr, null);
         puzzleBoard = state.getPuzzleBoard();
         distance = 0;
         for (int x = 0 ; x < state.getDimension() ; x++) {
