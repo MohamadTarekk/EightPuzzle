@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 public class SearchResult {
-    private ArrayList<PuzzleState> pathToGoal;
+    private ArrayList<String> pathToGoal;
     private Integer nodesExpanded;
     private Integer pathCost;
     private Integer searchDepth;
@@ -18,8 +18,19 @@ public class SearchResult {
     }
 
     public void findPathToGoal(PuzzleState puzzleState) {
-        while (puzzleState != null) {
-            this.pathToGoal.add(0, puzzleState);
+        int index;
+        while (puzzleState.getPreviousState() != null) {
+            index = puzzleState.getPreviousState().getNeighbors().indexOf(puzzleState.toString());
+            switch (index) {
+                case 0:
+                    this.pathToGoal.add(0, "Up");
+                case 1:
+                    this.pathToGoal.add(0, "Down");
+                case 2:
+                    this.pathToGoal.add(0, "Left");
+                case 3:
+                    this.pathToGoal.add(0, "Right");
+            }
             puzzleState = puzzleState.getPreviousState();
         }
     }
@@ -29,7 +40,7 @@ public class SearchResult {
     }
 
     public void updateCost() {
-        this.pathCost = pathToGoal.size() - 1;
+        this.pathCost = pathToGoal.size();
         if (this.searchDepth < this.pathCost)
             this.searchDepth = this.pathCost;
     }
@@ -46,7 +57,7 @@ public class SearchResult {
 
     /******************************* Getters *******************************/
 
-    public ArrayList<PuzzleState> getPathToGoal() {
+    public ArrayList<String> getPathToGoal() {
         return pathToGoal;
     }
 
