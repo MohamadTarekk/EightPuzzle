@@ -59,6 +59,9 @@ public class SearchAstar {
         end = System.currentTimeMillis();
         result.calculateRunningTime(start, end);
 
+        /* Set used search algorithm */
+        result.setSearchAlgorithm("A* search (" + costFunction.getClass().getSimpleName() + ")");
+
         /* Find path to goal */
         result.findPathToGoal(currentState);
 

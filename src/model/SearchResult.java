@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 
 public class SearchResult {
+    private String searchAlgorithm;
     private ArrayList<String> pathToGoal;
     private Integer nodesExpanded;
     private Integer pathCost;
@@ -19,6 +20,10 @@ public class SearchResult {
         searchDepth = 0;
         runningTime = 0L;
         found = false;
+    }
+
+    public void setSearchAlgorithm(String searchAlgorithm) {
+        this.searchAlgorithm = searchAlgorithm;
     }
 
     public void findPathToGoal(PuzzleState puzzleState) {
@@ -81,6 +86,10 @@ public class SearchResult {
     }
 
     /******************************* Getters *******************************/
+
+    public String getSearchAlgorithm() {
+        return searchAlgorithm;
+    }
 
     public ArrayList<String> getPathToGoal() {
         return pathToGoal;

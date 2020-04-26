@@ -56,6 +56,9 @@ public class SearchBFS {
         end = System.currentTimeMillis();
         result.calculateRunningTime(start, end);
 
+        /* Set used search algorithm */
+        result.setSearchAlgorithm("BFS");
+
         /* Find path to goal */
         result.findPathToGoal(currentState);
 

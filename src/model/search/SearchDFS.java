@@ -56,6 +56,9 @@ public class SearchDFS {
         end = System.currentTimeMillis();
         result.calculateRunningTime(start, end);
 
+        /* Set used search algorithm */
+        result.setSearchAlgorithm("DFS");
+
         /* Find path to goal */
         result.findPathToGoal(currentState);
 
