@@ -1,18 +1,11 @@
 package controller;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
-import view.GameWindowController;
-
-public class Main extends Application {
-    private GameWindowController gameWindowController = new GameWindowController();
-
-    @Override
-    public void start(Stage primaryStage){
-        gameWindowController.initialize(primaryStage);
-    }
+public class Main {
 
     public static void main(String[] args) {
-        launch(args);
+        if (args.length == 0)
+            args = new String[]{"ast", "1,2,0,3,4,5,6,7,8", "man"};
+        GameDriver gameDriver = new GameDriver();
+        gameDriver.run(args);
     }
 }
