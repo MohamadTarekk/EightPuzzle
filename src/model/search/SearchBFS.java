@@ -19,7 +19,7 @@ public class SearchBFS {
         boolean hasNeighbors;                                       /* Flag to indicate whether current state has neighbors */
 
         /* Start calculating elapsed time */
-        start = System.currentTimeMillis();
+        start = System.nanoTime();
 
         entry = new FrontierEntry(initialState.toString(), null);
         frontier.enqueue(entry);
@@ -28,12 +28,13 @@ public class SearchBFS {
             entry = frontier.dequeue();
             currentState = new PuzzleState(entry.getState(), entry.getParentState());
             explored.add(currentState.toString());
-            result.updateExpandedNodes();
             /* Check if goal state reached */
             if (goalState.toString().equals(currentState.toString())) {
                 result.setFound(true);
                 break;
             }
+            /* Mark state as expanded */
+            result.updateExpandedNodes();
             /* Add neighbors to frontier */
             hasNeighbors = false;
             currentState.findNeighbors();
@@ -48,12 +49,12 @@ public class SearchBFS {
                 }
             }
             /* Update search depth */
-            if (!hasNeighbors)
-                result.updateMaxDepth(currentState);
+            if (hasNeighbors)
+                result.updateMaxDepth(currentState.getDepth() + 1);
         }
 
         /* Calculate elapsed time */
-        end = System.currentTimeMillis();
+        end = System.nanoTime();
         result.calculateRunningTime(start, end);
 
         /* Set used search algorithm */

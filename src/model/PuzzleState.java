@@ -19,19 +19,12 @@ public class PuzzleState {
         String[] tiles;         /* Tiles arrangement in the initial state */
         int x, y;               /* Coordinates of tiles in the board */
 
-        /* Save previous state */
-        this.previousState = previousState;
-        /* Set depth */
-        if (previousState == null)
-            this.depth = 0;
-        else
-            this.depth = previousState.getDepth() + 1;
         /* Initialize puzzle board dimensions */
         tiles = inputState.split(",");
         dimension = (int) Math.sqrt(tiles.length);
-        puzzleBoard = new Integer[dimension][dimension];
 
         /* Lay initial state on puzzle board */
+        puzzleBoard = new Integer[dimension][dimension];
         for (int i = 0 ; i < tiles.length ; i++) {
             x = i / dimension;
             y = i % dimension;
@@ -41,6 +34,14 @@ public class PuzzleState {
                 puzzleBoard[x][y] = -1;
             }
         }
+
+        /* Save previous state */
+        this.previousState = previousState;
+        /* Set depth */
+        if (previousState == null)
+            this.depth = 0;
+        else
+            this.depth = previousState.getDepth() + 1;
     }
 
     /* Generate the string that represents the goal state */

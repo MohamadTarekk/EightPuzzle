@@ -9,7 +9,7 @@ public class SearchResult {
     private Integer pathCost;
     private Integer maxSearchDepth;
     private Integer searchDepth;
-    private Long runningTime;
+    private Double runningTime;
     private boolean found;
 
     public SearchResult() {
@@ -18,7 +18,7 @@ public class SearchResult {
         pathCost = 0;
         maxSearchDepth = 0;
         searchDepth = 0;
-        runningTime = 0L;
+        runningTime = (double) 0;
         found = false;
     }
 
@@ -39,12 +39,16 @@ public class SearchResult {
             switch (index) {
                 case 0:
                     this.pathToGoal.add(0, "Up");
+                    break;
                 case 1:
                     this.pathToGoal.add(0, "Down");
+                    break;
                 case 2:
                     this.pathToGoal.add(0, "Left");
+                    break;
                 case 3:
                     this.pathToGoal.add(0, "Right");
+                    break;
             }
             puzzleState = puzzleState.getPreviousState();
         }
@@ -62,9 +66,9 @@ public class SearchResult {
         this.pathCost = pathToGoal.size();
     }
 
-    public void updateMaxDepth(PuzzleState leaf) {
-        if (this.maxSearchDepth < leaf.getDepth())
-            this.maxSearchDepth = leaf.getDepth();
+    public void updateMaxDepth(Integer depth) {
+        if (this.maxSearchDepth < depth)
+            this.maxSearchDepth = depth;
     }
 
     public void updateDepth() {
@@ -78,7 +82,7 @@ public class SearchResult {
     }
 
     public void calculateRunningTime(Long start, Long end) {
-        this.runningTime = end - start;
+        this.runningTime = (double) ((end - start) / 1000000);
     }
 
     public void setFound(boolean found) {
@@ -111,7 +115,7 @@ public class SearchResult {
         return searchDepth;
     }
 
-    public Long getRunningTime() {
+    public Double getRunningTime() {
         return runningTime;
     }
 

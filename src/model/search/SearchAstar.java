@@ -21,7 +21,7 @@ public class SearchAstar {
         boolean hasNeighbors;                                               /* Flag to indicate whether current state has neighbors */
 
         /* Start calculating elapsed time */
-        start = System.currentTimeMillis();
+        start = System.nanoTime();
 
         cost = costFunction.calculateCost(initialState.toString());
         entry = new MinHeapEntry(initialState.toString(), cost, null);
@@ -31,12 +31,13 @@ public class SearchAstar {
             entry = frontier.poll();
             currentState = new PuzzleState(entry.getState(), entry.getParentState());
             explored.add(currentState.toString());
-            result.updateExpandedNodes();
             /* Check if goal state reached */
             if (goalState.toString().equals(currentState.toString())) {
                 result.setFound(true);
                 break;
             }
+            /* Mark state as expanded */
+            result.updateExpandedNodes();
             /* Add neighbors to frontier */
             hasNeighbors = false;
             currentState.findNeighbors();
@@ -51,12 +52,12 @@ public class SearchAstar {
                     hasNeighbors = true;
                 }
             }
-            if (!hasNeighbors)
-                result.updateMaxDepth(currentState);
+            if (hasNeighbors)
+                result.updateMaxDepth(currentState.getDepth() + 1);
         }
 
         /* Calculate elapsed time */
-        end = System.currentTimeMillis();
+        end = System.nanoTime();
         result.calculateRunningTime(start, end);
 
         /* Set used search algorithm */
