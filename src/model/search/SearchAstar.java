@@ -61,7 +61,7 @@ public class SearchAstar {
         result.calculateRunningTime(start, end);
 
         /* Set used search algorithm */
-        result.setSearchAlgorithm("A* search (" + costFunction.getClass().getSimpleName() + ")");
+        result.setSearchAlgorithm("A star search (" + costFunction.getClass().getSimpleName() + ")");
 
         /* Find path to goal */
         result.findPathToGoal(currentState);

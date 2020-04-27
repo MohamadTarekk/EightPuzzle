@@ -60,7 +60,7 @@ public class SearchResult {
 
     public void updateCost() {
         if (!this.found) {
-            this.pathCost = -1;
+            this.pathCost = this.nodesExpanded;
             return;
         }
         this.pathCost = pathToGoal.size();
@@ -82,12 +82,25 @@ public class SearchResult {
     }
 
     public void calculateRunningTime(Long start, Long end) {
-        this.runningTime = (double) ((end - start) / 1000000);
+        this.runningTime = (double) (end - start);
+        for (int i = 0 ; i < 9 ; i++)
+            this.runningTime /= 10;
     }
 
     public void setFound(boolean found) {
         this.found = found;
     }
+
+    @Override
+    public String toString() {
+        return  "path_to_Goal: " + this.getPathToGoal().toString() + "\n" +
+                "cost_of_path: " + this.getPathCost() + "\n" +
+                "nodes_expanded: " + this.getNodesExpanded() + "\n" +
+                "search_depth: " + this.getSearchDepth() + "\n" +
+                "max_search_depth: " + this.getMaxSearchDepth() + "\n" +
+                "running_time: " + this.getRunningTime().floatValue() + "\n";
+    }
+
 
     /******************************* Getters *******************************/
 
