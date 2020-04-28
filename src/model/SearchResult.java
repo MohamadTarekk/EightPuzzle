@@ -26,8 +26,13 @@ public class SearchResult {
         this.searchAlgorithm = searchAlgorithm;
     }
 
-    public void findPathToGoal(PuzzleState puzzleState) {
+    public void findPathToGoal(PuzzleState puzzleState, boolean overflow) {
         int index;
+
+        if (overflow) {
+            this.pathToGoal.add(this.searchAlgorithm + " failed! (Out of memory space)");
+            return;
+        }
 
         if (!this.found) {
             this.pathToGoal.add("Goal not found!");
@@ -35,7 +40,7 @@ public class SearchResult {
         }
 
         while (puzzleState.getPreviousState() != null) {
-            index = puzzleState.getPreviousState().getNeighbors().indexOf(puzzleState.toString());
+            index = puzzleState.getPreviousState().getNeighbors().indexOf(puzzleState.getStateString());
             switch (index) {
                 case 0:
                     this.pathToGoal.add(0, "Up");

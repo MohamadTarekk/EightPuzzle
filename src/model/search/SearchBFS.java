@@ -21,54 +21,69 @@ public class SearchBFS {
         /* Start calculating elapsed time */
         start = System.nanoTime();
 
-        entry = new FrontierEntry(initialState.toString(), null);
+        entry = new FrontierEntry(initialState.getStateString(), null);
         frontier.enqueue(entry);
-        while (!frontier.isEmpty()) {
-            /* Get next state */
-            entry = frontier.dequeue();
-            currentState = new PuzzleState(entry.getState(), entry.getParentState());
-            explored.add(currentState.toString());
-            /* Check if goal state reached */
-            if (goalState.toString().equals(currentState.toString())) {
-                result.setFound(true);
-                break;
-            }
-            /* Mark state as expanded */
-            result.updateExpandedNodes();
-            /* Add neighbors to frontier */
-            hasNeighbors = false;
-            currentState.findNeighbors();
-            for (String neighbor:
-                    currentState.getNeighbors()) {
-                if (neighbor == null)
-                    continue;
-                entry = new FrontierEntry(neighbor, currentState);
-                if ( !frontier.contains(entry) && !explored.contains(neighbor) ) {
-                    frontier.enqueue(entry);
-                    hasNeighbors = true;
+        try {
+            while (!frontier.isEmpty()) {
+                /* Get next state */
+                entry = frontier.dequeue();
+                currentState = new PuzzleState(entry.getState(), entry.getParentState());
+                explored.add(currentState.getStateString());
+                /* Check if goal state reached */
+                if (goalState.getStateString().equals(currentState.getStateString())) {
+                    result.setFound(true);
+                    break;
                 }
+                /* Mark state as expanded */
+                result.updateExpandedNodes();
+                /* Add neighbors to frontier */
+                hasNeighbors = false;
+                currentState.findNeighbors();
+                for (String neighbor :
+                        currentState.getNeighbors()) {
+                    if (neighbor == null)
+                        continue;
+                    entry = new FrontierEntry(neighbor, currentState);
+                    if (!frontier.contains(entry) && !explored.contains(neighbor)) {
+                        frontier.enqueue(entry);
+                        hasNeighbors = true;
+                    }
+                }
+                /* Update search depth */
+                if (hasNeighbors)
+                    result.updateMaxDepth(currentState.getDepth() + 1);
             }
-            /* Update search depth */
-            if (hasNeighbors)
-                result.updateMaxDepth(currentState.getDepth() + 1);
+        } catch (OutOfMemoryError e) {
+            frontier.clear();
+            explored.clear();
+            end = System.nanoTime();
+            recordResult(result, currentState, true, start, end);
+            return result;
         }
 
-        /* Calculate elapsed time */
+        /* End calculating elapsed time */
         end = System.nanoTime();
-        result.calculateRunningTime(start, end);
 
+        /* Record found results */
+        recordResult(result, currentState, false, start, end);
+
+        return result;
+    }
+
+    private static void recordResult(SearchResult result, PuzzleState currentState, boolean overflow, Long start, Long end) {
         /* Set used search algorithm */
         result.setSearchAlgorithm("BFS");
 
+        /* Calculate elapsed time */
+        result.calculateRunningTime(start, end);
+
         /* Find path to goal */
-        result.findPathToGoal(currentState);
+        result.findPathToGoal(currentState, overflow);
 
         /* Update path depth */
         result.updateDepth();
 
         /* Update path cost */
         result.updateCost();
-
-        return result;
     }
 }

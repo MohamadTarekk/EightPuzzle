@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 
 public class PuzzleState {
+    /* Puzzle state as a string */
+    private String stateString;
     /* Layout of the puzzle board */
     private Integer[][] puzzleBoard;
     /* Side length of he puzzle board */
@@ -18,6 +20,9 @@ public class PuzzleState {
     public PuzzleState(String inputState, PuzzleState previousState) {
         String[] tiles;         /* Tiles arrangement in the initial state */
         int x, y;               /* Coordinates of tiles in the board */
+
+        /* Save state string */
+        this.stateString = inputState;
 
         /* Initialize puzzle board dimensions */
         tiles = inputState.split(",");
@@ -148,6 +153,11 @@ public class PuzzleState {
 
 
     /******************************* Getters *******************************/
+
+    /* Getter for state string */
+    public String getStateString() {
+        return this.stateString;
+    }
 
     /* Getter for puzzle board layout */
     public Integer[][] getPuzzleBoard() {
