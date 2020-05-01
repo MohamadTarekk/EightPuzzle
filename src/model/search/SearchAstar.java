@@ -1,24 +1,24 @@
 package model.search;
 
+import lib.HashPriorityQueue;
 import lib.MinHeapEntry;
 import model.PuzzleState;
 import model.SearchResult;
 import model.heuristic.Heuristic;
 
 import java.util.HashSet;
-import java.util.PriorityQueue;
 import java.util.Set;
 
 public class SearchAstar {
     public static SearchResult Astar(PuzzleState initialState, PuzzleState goalState, Heuristic costFunction) {
-        PriorityQueue<MinHeapEntry> frontier = new PriorityQueue<>();       /* Min Heap of frontier nodes */
-        Set<String> explored = new HashSet<>();                             /* Set of explored nodes */
-        PuzzleState currentState = initialState;                            /* Current state object */
-        MinHeapEntry entry;                                                 /* Min Heap entry object */
-        int cost;                                                           /* Cost of state heuristic function */
-        SearchResult result = new SearchResult();                           /* Search results object */
-        Long start, end;                                                    /* For elapsed time calculation */
-        boolean hasNeighbors;                                               /* Flag to indicate whether current state has neighbors */
+        HashPriorityQueue<MinHeapEntry> frontier = new HashPriorityQueue<>();   /* Min Heap of frontier nodes */
+        Set<String> explored = new HashSet<>();                                 /* Set of explored nodes */
+        PuzzleState currentState = initialState;                                /* Current state object */
+        MinHeapEntry entry;                                                     /* Min Heap entry object */
+        int cost;                                                               /* Cost of state heuristic function */
+        SearchResult result = new SearchResult();                               /* Search results object */
+        Long start, end;                                                        /* For elapsed time calculation */
+        boolean hasNeighbors;                                                   /* Flag to indicate whether current state has neighbors */
 
         /* Start calculating elapsed time */
         start = System.nanoTime();
@@ -29,7 +29,7 @@ public class SearchAstar {
         try {
             while (!frontier.isEmpty()) {
                 /* Get next state */
-                entry = frontier.poll();
+                entry = frontier.extract();
                 currentState = new PuzzleState(entry.getState(), entry.getParentState());
                 explored.add(currentState.getStateString());
                 /* Check if goal state reached */
@@ -50,6 +50,9 @@ public class SearchAstar {
                     entry = new MinHeapEntry(neighbor, cost, currentState);
                     if (!frontier.contains(entry) && !explored.contains(neighbor)) {
                         frontier.add(entry);
+                        hasNeighbors = true;
+                    } else if (frontier.contains(entry)) {
+                        frontier.add(entry);    // This will update the key of the MinHeapEntry
                         hasNeighbors = true;
                     }
                 }
@@ -72,6 +75,7 @@ public class SearchAstar {
 
         return result;
     }
+
     private static void recordResult(SearchResult result, PuzzleState currentState, boolean overflow, Long start, Long end, Heuristic costFunction) {
         /* Set used search algorithm */
         result.setSearchAlgorithm("A star search (" + costFunction.getClass().getSimpleName() + ")");

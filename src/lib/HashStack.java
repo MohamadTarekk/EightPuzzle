@@ -26,6 +26,9 @@ public class HashStack<Type> extends Stack<Type> {
 
     @Override
     public boolean contains(Object object) {
+        if (!(object instanceof FrontierEntry)) {
+            return false;
+        }
         return map.contains(((FrontierEntry)object).getState());
     }
 }
