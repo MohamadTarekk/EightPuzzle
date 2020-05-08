@@ -18,7 +18,7 @@ public class EuclideanDistance extends Heuristic {
             for (int y = 0 ; y < state.getDimension() ; y++) {
                 goalX = puzzleBoard[x][y] / state.getDimension();
                 goalY = puzzleBoard[x][y] % state.getDimension();
-                distance += Math.sqrt(Math.pow((goalX - x), 2)) + Math.sqrt(Math.pow((goalY - y), 2));
+                distance += Math.sqrt(Math.pow((goalX - x), 2) + Math.pow((goalY - y), 2));
             }
         }
         return distance;
