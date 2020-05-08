@@ -7,7 +7,7 @@
 
 # Eight Puzzle solver
 
-![image alt text](https://drive.google.com/uc?export=view&id=1yXNMbaol7GKJ50UqvQeiQ6-ZsvJEkyMF)
+![image alt text](readme_images/image_0.png)
 
 Assignment I for the Artificial Intelligence course at [Faculty of Engineering, Alexandria University](https://eng.alexu.edu.eg/index.php/en/). Based on the "ColumbiaX: CSMM.101x Artificial Intelligence" original [here](https://courses.edx.org/courses/course-v1:ColumbiaX+CSMM.101x+1T2020/courseware/ea3118a1b62849b99423f8b1182e1bbf/a1f977f8f5ab4e79a123133a94d77c7e/?activate_block_id=block-v1%3AColumbiaX%2BCSMM.101x%2B1T2020%2Btype%40sequential%2Bblock%40a1f977f8f5ab4e79a123133a94d77c7e).
 
