@@ -83,9 +83,13 @@ As its name implies, DFS performs the search by traversing the graph branch by b
 
 A* search uses a cost function called a "heuristic" to decide the next move. Thus, it chooses the least costly move among all possible moves on each iteration. The used heuristics in this assignment are:
 
-#### Manhattan Distance:
+#### Manhattan Distance: 
 
-#### Euclidean Distance:
+<p align="center"> <a> <img src="readme_images/image_35.png" alt="Manhattan Distance"> </a> </p>
+
+#### Euclidean Distance: 
+
+<p align="center"> <a> <img src="readme_images/image_36.png" alt="Euclidean Distance"> </a> </p>
 
 #### The algorithm works as follows:
 
@@ -213,13 +217,13 @@ Calculates the cost for A* search using the Manhattan formula.
 
 ![image alt text](readme_images/image_20.png)
 
-### A star search (Manhattan Distance):
+### A* search (Manhattan Distance):
 
 ![image alt text](readme_images/image_21.png)
 
 ![image alt text](readme_images/image_22.png)
 
-### A star search (Euclidean Distance):
+### A* search (Euclidean Distance):
 
 ![image alt text](readme_images/image_23.png)
 
@@ -239,11 +243,11 @@ In addition to solving the 8-puzzle, the program can solve all square puzzle boa
 
 ![image alt text](readme_images/image_26.png)
 
-#### A star search (Manhattan Distance):
+#### A* search (Manhattan Distance):
 
 ![image alt text](readme_images/image_27.png)
 
-#### A star search (Euclidean Distance):
+#### A* search (Euclidean Distance):
 
 ![image alt text](readme_images/image_28.png)
 
@@ -257,11 +261,11 @@ In addition to solving the 8-puzzle, the program can solve all square puzzle boa
 
 ![image alt text](readme_images/image_30.png)
 
-#### A star search (Manhattan Distance):
+#### A* search (Manhattan Distance):
 
 ![image alt text](readme_images/image_31.png)
 
-#### A star search (Euclidean Distance):
+#### A* search (Euclidean Distance):
 
 ![image alt text](readme_images/image_32.png)
 
